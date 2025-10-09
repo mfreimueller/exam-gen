@@ -1,0 +1,4 @@
+base_file = "base.tex"
+questions = "questions"
+student_count = 25
+out_dir = "out"

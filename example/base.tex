@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{exam}
+
+% --- Settings ---
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{needspace}
+
+\pagestyle{headandfoot}
+\firstpageheadrule{}
+\firstpageheader{1AHWIT}{}{20. Oktober 2025}
+\runningheader{1AHWIT}{}{1. INFI-Test}
+\firstpagefooter{}{}{}
+\runningfooter{}{}{}
+
+% --- Punkteanzeige ---
+\pointname{ Points }
+\pointformat{(\thepoints)}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large 1st exam}\\[1ex]
+\textit{Worktime: 30 minutes – total points: 20}
+\end{center}
+\vspace{1em}
+
+% --- Notes ---
+\noindent\textbf{Notes:}
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+  \item Check your spelling.
+  \item Write complete sentences.
+\end{itemize}
+
+\begin{questions}
+
+% @insert 2 philosophy
+
+% @insert 2 literature
+
+\end{questions}
+
+\runningfooter{}{}{
+  \small{Grading schema: A: 18--20 \quad B: 16--17 \quad C: 12--15 \quad D: 8--11 \quad F: 0--7}
+}
+
+\end{document}
