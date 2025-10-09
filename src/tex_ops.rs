@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::{env, fs};
 use std::path::PathBuf;
 use crate::config::Config;
-use crate::generator::Question;
 
 const SEARCH_PREFIX: &str = "% @insert";
 

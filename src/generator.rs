@@ -13,7 +13,7 @@ pub fn generate_exams(config: &Config, exam_options: &ExamOptions, questions: Ha
 
     let mut tests: Vec<Test> = Vec::new();
     let mut rng = rand::rng();
-    for n in 0..config.student_count {
+    for _ in 0..config.student_count {
         let random_idx = rng.random_range(1..permutations.len());
         tests.push(permutations[random_idx].clone());
     }
@@ -50,7 +50,7 @@ fn generate_permutations(pattern: Vec<String>, questions: HashMap<String, Vec<St
 fn get_pattern(exam_options: &ExamOptions) -> Vec<String> {
     let mut pattern: Vec<String> = Vec::new();
     for difficulty in exam_options.difficulty_levels.clone() {
-        for n in 0..difficulty.1 {
+        for _ in 0..difficulty.1 {
             pattern.push(difficulty.0.clone());
         }
     }
