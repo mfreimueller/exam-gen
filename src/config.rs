@@ -5,6 +5,8 @@ use serde::Deserialize;
 pub struct Config {
     pub(crate) base_file: String,
     pub(crate) questions: String,
+    pub(crate) student_count: i32,
+    pub(crate) out_dir: String,
 }
 
 impl Config {}
