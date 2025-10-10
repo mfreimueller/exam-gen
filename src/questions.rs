@@ -17,7 +17,7 @@ pub fn load_questions(config: &Config) -> anyhow::Result<HashMap<String, Vec<Str
         for entry_result in fs::read_dir(&level_path)? {
             let entry = entry_result?;
             let path = entry.path().display().to_string();
-            let question = format!("{level} {path}");
+            let question = format!("{path}");
 
             files.push(question);
         }

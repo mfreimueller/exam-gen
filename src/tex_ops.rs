@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::{env, fs};
 use std::path::PathBuf;
+use rand::seq::SliceRandom;
 use crate::config::Config;
 
 const SEARCH_PREFIX: &str = "% @insert";
@@ -26,37 +27,19 @@ pub fn load_exam_options(config: &Config) -> anyhow::Result<ExamOptions> {
 pub fn write_questions_into_tex(tex: &String, questions: &Vec<String>) -> anyhow::Result<String> {
     let mut tex = tex.clone();
 
-    let mut strings_to_replace: HashMap<String, String> = HashMap::new();
+    let insert_loc = tex.find(SEARCH_PREFIX).unwrap();
 
-    for line in tex.lines() {
-        if line.starts_with(SEARCH_PREFIX) {
-            let parts = line.split_whitespace().collect::<Vec<&str>>();
+    let mut rnd = rand::rng();
+    let mut shuffled_questions: Vec<String> = questions.clone();
+    shuffled_questions.shuffle(&mut rnd);
 
-            if parts.len() >= 4 {
-                let difficulty = parts[3].to_string();
-                let mut tex_code: String = String::from("");
-
-                for question in questions {
-                    if question.starts_with(difficulty.as_str()) {
-                        let question_part: Vec<String> = question
-                            .split_whitespace()
-                            .map(|s| s.to_string())
-                            .collect();
-                        let file_path = question_part[1].to_string();
-                        let file_code = fs::read_to_string(file_path)?;
-
-                        tex_code = format!("{tex_code}\n\n\n{file_code}");
-                    }
-                }
-
-                strings_to_replace.insert(difficulty, tex_code);
-            }
-        }
+    let mut tex_code = String::new();
+    for file_path in shuffled_questions {
+        let file_code = fs::read_to_string(file_path)?;
+        tex_code = format!("{tex_code}\n\n\n{file_code}");
     }
 
-    for placeholder in strings_to_replace.keys() {
-        tex = tex.replace(placeholder, strings_to_replace.get(placeholder).unwrap());
-    }
+    tex.insert_str(insert_loc, &tex_code);
 
     Ok(tex)
 }
