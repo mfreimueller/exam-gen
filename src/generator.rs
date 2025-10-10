@@ -9,13 +9,15 @@ pub type Test = Vec<Question>;
 
 pub fn generate_exams(config: &Config, exam_options: &ExamOptions, questions: HashMap<String, Vec<String>>) -> anyhow::Result<Vec<Test>> {
     let pattern = get_pattern(&exam_options);
-    let permutations = generate_permutations(pattern, questions);
+    let mut permutations = generate_permutations(pattern, questions);
 
     let mut tests: Vec<Test> = Vec::new();
     let mut rng = rand::rng();
     for _ in 0..config.student_count {
         let random_idx = rng.random_range(1..permutations.len());
+
         tests.push(permutations[random_idx].clone());
+        permutations.remove(random_idx); // remove the randomly selected test to prevent duplicates
     }
 
     Ok(tests)
