@@ -5,4 +5,6 @@ use clap::Parser;
 pub struct Args {
     #[arg(short, long, default_value = "exam-gen.toml")]
     pub(crate) config_file: String,
+    #[arg(long)]
+    pub(crate) count: i32,
 }
