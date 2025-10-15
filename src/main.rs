@@ -21,7 +21,7 @@ fn main() -> anyhow::Result<()> {
     let questions = load_questions(&config)?;
     let exam_options = load_exam_options(&config)?;
 
-    let tests = generate_exams(args.count, &exam_options, questions)?;
+    let tests = generate_exams(&config, &exam_options, questions)?;
 
     export_tests(&config, &exam_options, tests)
 }

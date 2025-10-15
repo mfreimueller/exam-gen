@@ -13,7 +13,7 @@ pub struct ExamOptions {
 
 pub fn load_exam_options(config: &Config) -> anyhow::Result<ExamOptions> {
     let current_dir = env::current_dir()?;
-    let base_path = current_dir.join(PathBuf::from(&config.core.base_file));
+    let base_path = current_dir.join(PathBuf::from(&config.base_file));
 
     let tex = std::fs::read_to_string(&base_path)?;
     let difficulty_levels = extract_difficulty_levels(&tex);

@@ -3,22 +3,10 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct Config {
-    pub core: CoreConfig,
-    pub questions: QuestionsConfig,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct CoreConfig {
-    pub base_file: String,
-    pub questions_dir: String,
-    pub out_dir: String,
-    pub convert_pdf: bool,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct QuestionsConfig {
-    pub categories: Vec<String>,
-    pub shuffle: bool,
+    pub(crate) base_file: String,
+    pub(crate) questions: String,
+    pub(crate) student_count: i32,
+    pub(crate) out_dir: String,
 }
 
 impl Config {}
