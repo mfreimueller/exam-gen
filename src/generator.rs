@@ -7,13 +7,13 @@ use rand::prelude::*;
 pub type Question = String;
 pub type Test = Vec<Question>;
 
-pub fn generate_exams(config: &Config, exam_options: &ExamOptions, questions: HashMap<String, Vec<String>>) -> anyhow::Result<Vec<Test>> {
+pub fn generate_exams(count: i32, exam_options: &ExamOptions, questions: HashMap<String, Vec<String>>) -> anyhow::Result<Vec<Test>> {
     let pattern = get_pattern(&exam_options);
     let mut permutations = generate_permutations(pattern, questions);
 
     let mut tests: Vec<Test> = Vec::new();
     let mut rng = rand::rng();
-    for _ in 0..config.student_count {
+    for _ in 0..count {
         let random_idx = rng.random_range(1..permutations.len());
 
         tests.push(permutations[random_idx].clone());

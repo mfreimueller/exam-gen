@@ -7,7 +7,7 @@ use crate::tex_ops::{write_questions_into_tex, ExamOptions};
 
 pub fn export_tests(config: &Config, exam_options: &ExamOptions, tests: Vec<Test>) -> anyhow::Result<()> {
     let current_dir = env::current_dir()?;
-    let out_base_path = current_dir.join(&config.out_dir);
+    let out_base_path = current_dir.join(&config.core.base_file);
 
     if !fs::exists(&out_base_path)? {
         fs::create_dir(&out_base_path)?;

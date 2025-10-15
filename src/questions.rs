@@ -7,10 +7,10 @@ pub fn load_questions(config: &Config) -> anyhow::Result<HashMap<String, Vec<Str
     let mut dir_file_map: HashMap<String, Vec<String>> = HashMap::new();
 
     let current_dir = env::current_dir()?;
-    let base_path = current_dir.join(PathBuf::from(&config.questions));
-    let difficulty_levels = get_difficulty_levels(current_dir, &config.questions)?;
+    let base_path = current_dir.join(PathBuf::from(&config.core.questions_dir));
 
-    for level in difficulty_levels {
+    // TODO: find way to skip .clone()
+    for level in config.questions.categories.clone() {
         let level_path = base_path.join(&level);
         let mut files: Vec<String> = Vec::new();
 
@@ -26,21 +26,4 @@ pub fn load_questions(config: &Config) -> anyhow::Result<HashMap<String, Vec<Str
     }
 
     Ok(dir_file_map)
-}
-
-fn get_difficulty_levels(current_dir: PathBuf, questions_location: &String) -> anyhow::Result<Vec<String>> {
-    let mut difficulty_levels: Vec<String> = Vec::new();
-
-    let base_path = current_dir.join(PathBuf::from(questions_location));
-    for entry_result in fs::read_dir(base_path)? {
-        let entry = entry_result?;
-        if entry.file_type()?.is_dir() {
-            difficulty_levels.push(entry
-                .file_name()
-                .into_string()
-                .unwrap());
-        }
-    }
-
-    Ok(difficulty_levels)
 }
