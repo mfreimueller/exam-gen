@@ -15,7 +15,12 @@ pub fn load_questions(config: &Config) -> anyhow::Result<HashMap<String, Vec<Str
         let mut files: Vec<String> = Vec::new();
 
         for entry_result in fs::read_dir(&level_path)? {
-            let entry = entry_result?;
+            let result = entry_result?;
+            if result.metadata()?.is_dir() {
+                continue
+            }
+
+            let entry = result;
             let path = entry.path().display().to_string();
             let question = format!("{path}");
 
