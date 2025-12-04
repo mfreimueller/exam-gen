@@ -1,5 +1,6 @@
 use std::collections::HashMap;
-use std::{env, fs};
+use std::{env, fmt, fs};
+use std::fmt::Formatter;
 use std::path::PathBuf;
 use rand::seq::SliceRandom;
 use crate::config::Config;
@@ -9,6 +10,12 @@ const SEARCH_PREFIX: &str = "% @insert";
 pub struct ExamOptions {
     pub(crate) tex: String,
     pub(crate) difficulty_levels: HashMap<String, i32>
+}
+
+impl fmt::Display for ExamOptions {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "ExamOptions - difficulty levels: {:?}", self.difficulty_levels)
+    }
 }
 
 pub fn load_exam_options(config: &Config) -> anyhow::Result<ExamOptions> {
