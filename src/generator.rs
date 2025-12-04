@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use crate::config::Config;
 use crate::tex_ops::ExamOptions;
 use itertools::Itertools;
 use rand::prelude::*;
@@ -10,6 +9,12 @@ pub type Test = Vec<Question>;
 pub fn generate_exams(count: i32, exam_options: &ExamOptions, questions: HashMap<String, Vec<String>>) -> anyhow::Result<Vec<Test>> {
     let pattern = get_pattern(&exam_options);
     let mut permutations = generate_permutations(pattern, questions);
+    let permutation_count = permutations.len() as i32;
+
+    if permutation_count <= 0 {
+        eprintln!("Warning: no permutations generated for pattern {}", exam_options);
+        return Ok(Vec::new());
+    }
 
     let mut tests: Vec<Test> = Vec::new();
     let mut rng = rand::rng();
@@ -17,7 +22,10 @@ pub fn generate_exams(count: i32, exam_options: &ExamOptions, questions: HashMap
         let random_idx = rng.random_range(1..permutations.len());
 
         tests.push(permutations[random_idx].clone());
-        permutations.remove(random_idx); // remove the randomly selected test to prevent duplicates
+
+        if permutation_count >= count {
+            permutations.remove(random_idx); // remove the randomly selected test to prevent duplicates
+        }
     }
 
     Ok(tests)
